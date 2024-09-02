@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ewan Ko</title>
+    <link href="hindialam.css" rel="stylesheet"/>
+  </head>
+  <body>
+      <main>
+        <header>
+          <h1 id="title">Pakilala Ka Nga</h1>
+          <p id="description">Please sagutan muu</p>
+        </header>
+          <form id="survey-form">
+            <div class="form-group">
+              <label id="name-label" for="name">Anong pangalan tinatawag sa'yo?</label>
+              <input type="text" id="name" name="name" placeholder="pangalan mo uyy" required>
+          </div>
+          <div class="form-group">
+            <label id="name-label" for="apelyido">Anong apelyido mo?</label>
+            <input type="text" id="apelyido" name="apelyido" placeholder="apelyido" required>
+            <div class="form-group">
+              <div class="form-group">
+                <label id="name-label" for="taon">Ilang taon ka na ba?</label>
+                <input type="number" id="taon" name="taon" min="1" max="120" placeholder="edad" required>
+                <div class="form-group">
+              <p>Crush mo ba ako??</p>
+              <label>
+                  <input type="radio" name="preference" value="option1" required>
+                  YESSSS
+              </label>
+              <label>
+                  <input type="radio" name="preference" value="option2">
+                  no
+              </label>
+          </div>
+            <div id="mukha">
+              <label for="profile-picture">Pakita Mo Kung Sino Ka</label> 
+              <input id="profile-picture" type="file" name="file" />
+            </div>
+            <p></p>
+            <div class="form-group">
+              <p>Pogi ba ako??</p>
+              <label>
+                  <input type="checkbox" name="checkbox" value="checkbox1">
+                  YES
+              </label>
+              <label>
+                  <input type="checkbox" name="checkbox" value="checkbox2">
+                  YESSSSS
+              </label>
+              <label>
+                  <input type="checkbox" name="checkbox" value="checkbox3">
+                  YES NA YES
+              </label>
+              <label>
+                <input type="checkbox" name="checkbox" value="checkbox3">
+                SOBRA PA SA SOBRA
+            </label>
+          </div>
+              <label for="bio">Ano masasabi mo sa'kin?
+                <textarea id="bio" name="bio" rows="3" cols="30" placeholder="ano ano ano..."></textarea>
+              </label>
+
+              <button type="submit" id="submit">Submit</button>
+          </form>
+    </div>
+  </body>
+</html>
