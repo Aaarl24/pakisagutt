@@ -27,11 +27,11 @@
                 <div class="form-group">
               <p>Crush mo ba ako??</p>
               <label>
-                  <input type="radio" name="preference" value="option1" required>
+                  <input type="radio" name="preference" value="YESSSS!!!" required> <!-- Changed option values to actual answers -->
                   YESSSS!!!
               </label>
               <label>
-                  <input type="radio" name="preference" value="option2">
+                  <input type="radio" name="preference" value="no"> <!-- Changed option values to actual answers -->
                   no
               </label>
           </div>
@@ -43,19 +43,19 @@
             <div class="form-group">
               <p>Miss mo na ba ako??</p>
               <label>
-                  <input type="checkbox" name="checkbox" value="checkbox1">
+                  <input type="checkbox" name="checkbox" value="YES"> <!-- Updated checkbox values for actual answers -->
                   YES
               </label>
               <label>
-                  <input type="checkbox" name="checkbox" value="checkbox2">
+                  <input type="checkbox" name="checkbox" value="YESSSSS"> <!-- Updated checkbox values for actual answers -->
                   YESSSSS
               </label>
               <label>
-                  <input type="checkbox" name="checkbox" value="checkbox3">
+                  <input type="checkbox" name="checkbox" value="YES NA YES"> <!-- Updated checkbox values for actual answers -->
                   YES NA YES
               </label>
               <label>
-                <input type="checkbox" name="checkbox" value="checkbox3">
+                <input type="checkbox" name="checkbox" value="SOBRA PA SA SOBRA"> <!-- Updated checkbox values for actual answers -->
                 SOBRA PA SA SOBRA
             </label>
           </div>
@@ -72,19 +72,26 @@
             document.getElementById("survey-form").addEventListener("submit", async function(event) 
             {
                 event.preventDefault(); // Stop the page from reloading
+
+                // Collect form data
                 const name = document.getElementById("name").value;
                 const apelyido = document.getElementById("apelyido").value;
-                const taon = document.getElementById("taon").value;
-                const crush = document.querySelector('input[name="preference"]:checked')?.value;
-                const bio = document.getElementById("bio").value;
+                const taon = document.getElementById("taon").value; // 'Edad' in your sheet
+                const crush = document.querySelector('input[name="preference"]:checked')?.value; // 'CrushMoBaAko' in your sheet
+                const bio = document.getElementById("bio").value; // 'Comment' in your sheet
 
+                // Collect the selected checkboxes for "Miss mo na ba ako??"
+                const checkboxes = Array.from(document.querySelectorAll('input[name="checkbox"]:checked')).map(checkbox => checkbox.value);
+                
+                // Prepare the form data for Google Sheets
                 const formData =
                 {
-                    name,
-                    apelyido,
-                    taon,
-                    crush,
-                    bio
+                    name,      // Corresponds to 'Name' column
+                    apelyido,  // Corresponds to 'Apelyido' column
+                    taon,      // Corresponds to 'Edad' column
+                    crush,     // Corresponds to 'CrushMoBaAko' column
+                    bio,       // Corresponds to 'Comment' column
+                    checkboxes // New field for "Miss mo na ba ako??" responses
                 };
 
                 // Send to Google Sheets
@@ -92,14 +99,14 @@
                 {
                     await fetch("https://script.google.com/macros/s/AKfycbz3gATHbu47l7VqtEkmHHXnB2VxQ5SkS8eUiyacZGxf21JWCRQx1mPKz4qBm0f1HOaAQg/exec", {
                     method: "POST",
-                    body: JSON.stringify(formData)
+                    body: JSON.stringify(formData) // Send the data as a JSON object
                 });
                 alert("YAY!!");
                 } catch (error) {
                 console.error("Error sending to Google Sheets:", error);
-                alert("Na-save sa browser, pero di nakaabot sa Sheet bro.");
+                alert("Aww, error :<");
                 }
-                });
+            });
     </script>   
   </body>
 </html>
