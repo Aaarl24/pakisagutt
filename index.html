@@ -71,48 +71,49 @@
     <script>
             document.getElementById("survey-form").addEventListener("submit", async function(event) 
             {
-                event.preventDefault(); // Stop the page from reloading
+            event.preventDefault(); // Stop the page from reloading
+        
+            // Collect form data
+            const name = document.getElementById("name").value;
+            const apelyido = document.getElementById("apelyido").value;
+            const taon = document.getElementById("taon").value; // 'Edad' in your sheet
+            const crush = document.querySelector('input[name="preference"]:checked')?.value; // 'CrushMoBaAko' in your sheet
+            const bio = document.getElementById("bio").value; // 'Comment' in your sheet
+        
+            // Collect the selected checkboxes for "Miss mo na ba ako??"
+            const checkboxes = Array.from(document.querySelectorAll('input[name="checkbox"]:checked')).map(checkbox => checkbox.value);
             
-                // Collect form data
-                const name = document.getElementById("name").value;
-                const apelyido = document.getElementById("apelyido").value;
-                const taon = document.getElementById("taon").value; // 'Edad' in your sheet
-                const crush = document.querySelector('input[name="preference"]:checked')?.value; // 'CrushMoBaAko' in your sheet
-                const bio = document.getElementById("bio").value; // 'Comment' in your sheet
-            
-                // Collect the selected checkboxes for "Miss mo na ba ako??"
-                const checkboxes = Array.from(document.querySelectorAll('input[name="checkbox"]:checked')).map(checkbox => checkbox.value);
-                
-                // Handle the file input
-                const fileInput = document.getElementById("profile-picture");
-                const file = fileInput.files[0]; // Get the first file if any is selected
-                const fileUrl = file ? file.name : "No file uploaded"; // Store file name or indicate no file uploaded
-            
-                // Prepare the form data for Google Sheets
-                const formData =
-                {
-                    name,      // Corresponds to 'Name' column
-                    apelyido,  // Corresponds to 'Apelyido' column
-                    taon,      // Corresponds to 'Edad' column
-                    crush,     // Corresponds to 'CrushMoBaAko' column
-                    bio,       // Corresponds to 'Comment' column
-                    checkboxes, // New field for "Miss mo na ba ako??" responses
-                    fileUrl    // New field for the file reference
-                };
-            
-                // Send to Google Sheets
-                try 
-                {
-                    await fetch("https://script.google.com/macros/s/AKfycbz3gATHbu47l7VqtEkmHHXnB2VxQ5SkS8eUiyacZGxf21JWCRQx1mPKz4qBm0f1HOaAQg/exec", {
+            // If no checkboxes are selected, set it to an empty string
+            const missMoNaBaAko = checkboxes.length > 0 ? checkboxes.join(", ") : "No selection";
+        
+            // Handle the file input
+            const fileInput = document.getElementById("profile-picture");
+            const file = fileInput.files[0]; // Get the first file if any is selected
+            const fileUrl = file ? file.name : "No file uploaded"; // Store file name or indicate no file uploaded
+        
+            // Prepare the form data for Google Sheets
+            const formData = {
+                name,      // Corresponds to 'Name' column
+                apelyido,  // Corresponds to 'Apelyido' column
+                taon,      // Corresponds to 'Edad' column
+                crush,     // Corresponds to 'CrushMoBaAko' column
+                bio,       // Corresponds to 'Comment' column
+                missMoNaBaAko, // The responses for "Miss mo na ba ako??"
+                fileUrl    // The uploaded file name or "No file uploaded"
+            };
+        
+            // Send to Google Sheets
+            try {
+                await fetch("https://script.google.com/macros/s/AKfycbz3gATHbu47l7VqtEkmHHXnB2VxQ5SkS8eUiyacZGxf21JWCRQx1mPKz4qBm0f1HOaAQg/exec", {
                     method: "POST",
                     body: JSON.stringify(formData) // Send the data as a JSON object
                 });
                 alert("YAY!!");
-                } catch (error) {
+            } catch (error) {
                 console.error("Error sending to Google Sheets:", error);
                 alert("Na-save sa browser, pero di nakaabot sa Sheet bro.");
-                }
-            });
+            }
+        });
     </script>   
   </body>
 </html>
