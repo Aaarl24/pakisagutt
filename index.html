@@ -66,5 +66,60 @@
               <button type="submit" id="submit">Submit</button>
           </form>
     </div>
+    <div id="saved-data" style="margin-top: 20px;"></div>
+
+    <script>
+            document.getElementById("survey-form").addEventListener("submit", async function(event) 
+            {
+                event.preventDefault(); // Stop the page from reloading
+                const name = document.getElementById("name").value;
+                const apelyido = document.getElementById("apelyido").value;
+                const taon = document.getElementById("taon").value;
+                const crush = document.querySelector('input[name="preference"]:checked')?.value;
+                const pogiCheckboxes = document.querySelectorAll('input[name="checkbox"]:checked');
+                const pogi = Array.from(pogiCheckboxes).map(cb => cb.value);
+                const bio = document.getElementById("bio").value;
+
+                const formData =
+                {
+                    name,
+                    apelyido,
+                    taon,
+                    crush,
+                    pogi,
+                    bio
+                };
+
+                // Save locally
+                localStorage.setItem("pakilalaForm", JSON.stringify(formData));
+
+                // Send to Google Sheets
+                try 
+                {
+                    await fetch("https://script.google.com/macros/s/AKfycbz3gATHbu47l7VqtEkmHHXnB2VxQ5SkS8eUiyacZGxf21JWCRQx1mPKz4qBm0f1HOaAQg/exec", {
+                    method: "POST",
+                    body: JSON.stringify(formData)
+                });
+                alert("Naka-save na bro! 😎 Both local & online!");
+                } catch (error) {
+                console.error("Error sending to Google Sheets:", error);
+                alert("Na-save sa browser, pero di nakaabot sa Sheet bro.");
+                }
+                });
+
+                // Show saved data from localStorage
+                const saved = JSON.parse(localStorage.getItem("pakilalaForm"));
+                if (saved)
+                {
+                    document.getElementById("saved-data").innerHTML = `
+                    <h3>Sinagot mo dati:</h3>
+                    <p><strong>Name:</strong> ${saved.name} ${saved.apelyido}</p>
+                    <p><strong>Age:</strong> ${saved.taon}</p>
+                    <p><strong>Crush mo ba siya?:</strong> ${saved.crush}</p>
+                    <p><strong>Pogi ba siya?:</strong> ${saved.pogi.join(', ')}</p>
+                    <p><strong>Comment:</strong> ${saved.bio}</p>
+                    `;
+                }
+    </script>   
   </body>
 </html>
