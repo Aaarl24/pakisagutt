@@ -78,20 +78,22 @@
                 const apelyido = document.getElementById("apelyido").value;
                 const taon = document.getElementById("taon").value; // 'Edad' in your sheet
                 const crush = document.querySelector('input[name="preference"]:checked')?.value; // 'CrushMoBaAko' in your sheet
-                const bio = document.getElementById("bio").value; // 'Comment' in your sheet
-
-                // Collect the selected checkboxes for "Miss mo na ba ako??"
                 const checkboxes = Array.from(document.querySelectorAll('input[name="checkbox"]:checked')).map(checkbox => checkbox.value);
+                const fileInput = document.getElementById("profile-picture");
+                const file = fileInput.files[0]; // Get the first file if any is selected
+                const fileUrl = file ? file.name : "No file uploaded"; // Store file name or indicate no file uploaded
+                const bio = document.getElementById("bio").value; // 'Comment' in your sheet
                 
                 // Prepare the form data for Google Sheets
                 const formData =
                 {
-                    name,      // Corresponds to 'Name' column
-                    apelyido,  // Corresponds to 'Apelyido' column
-                    taon,      // Corresponds to 'Edad' column
-                    crush,     // Corresponds to 'CrushMoBaAko' column
-                    bio,       // Corresponds to 'Comment' column
-                    checkboxes // New field for "Miss mo na ba ako??" responses
+                    name,       // Corresponds to 'Name' column
+                    apelyido,   // Corresponds to 'Apelyido' column
+                    taon,       // Corresponds to 'Edad' column
+                    crush,      // Corresponds to 'CrushMoBaAko' column
+                    checkboxes, // New field for "Miss mo na ba ako??" responses
+                    fileUrl,    // New field for the file reference
+                    bio         // Corresponds to 'Comment' column
                 };
 
                 // Send to Google Sheets
